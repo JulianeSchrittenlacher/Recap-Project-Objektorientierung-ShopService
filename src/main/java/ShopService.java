@@ -48,4 +48,11 @@ public class ShopService {
                     .collect(Collectors.toList());
         };
     }
+
+    public OrderStatus updateOrderStatus(String orderId, OrderStatus newOrderStatus) {
+        Order order = orderRepo.getOrderById(orderId);
+        orderRepo.removeOrder(orderId);
+        orderRepo.addOrder(order.withOrderStatus(newOrderStatus));
+        return newOrderStatus;
+    }
 }
