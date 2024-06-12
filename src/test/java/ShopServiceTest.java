@@ -44,4 +44,24 @@ class ShopServiceTest {
 //        //THEN
 //        assertThrows(IdNotFoundException.class, () -> shopService.addOrder(productsIds));
     }
+
+    @Test
+    void getOrdersOfSpecificOrderStatus_ListOfOrdersWithProgressing_whenCalledWithProgressing() {
+//        ShopService shopService = new ShopService();
+//        ProductRepo repo = new ProductRepo();
+//        repo.addProduct();
+//        try {
+//            shopService.addOrder(productsIds);
+//        } catch (IdNotFoundException e) {}
+//
+//        //WHEN
+//        List<Order> actual =shopService.getOrdersOfSpecificOrderStatus(OrderStatus.PROCESSING);
+//
+//        //THEN
+//        a
+    }
+
+    @Test
+    void updateOrderStatus() {
+    }
 }
