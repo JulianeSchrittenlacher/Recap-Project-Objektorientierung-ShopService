@@ -41,11 +41,12 @@ public class ShopService {
 //            }
 //            products.add(productToOrder);
 //        }
-        Order newOrder = new Order(UUID.randomUUID().toString(), products,OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, ZonedDateTime.now());
         return orderRepo.addOrder(newOrder);
     }
 
     public List<Order> getOrdersOfSpecificOrderStatus(OrderStatus orderStatus) {
+
         return switch (orderStatus) {
             case PROCESSING -> orderRepo.getOrders().stream()
                     .filter(c -> c.orderStatus().equals(OrderStatus.PROCESSING))
