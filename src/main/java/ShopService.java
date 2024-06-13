@@ -1,6 +1,6 @@
 import lombok.RequiredArgsConstructor;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,16 +22,8 @@ public class ShopService {
     public Order addOrder(List<String> productIds) throws IdNotFoundException{
         List<Product> products = new ArrayList<>();
         for (String productId : productIds) {
-            try {
-                Optional<Product> productToOrder = productRepo.getProductById(productId);
-                if (productToOrder.isPresent()) {
-                    products.add(productToOrder.get());
-                } else {
-                    throw new IdNotFoundException(productId);
-                }
-            } catch (IdNotFoundException e) {
-                throw e;
-            }
+                Product productToOrder = productRepo.getProductById(productId).orElseThrow(()->new IdNotFoundException(productId));
+                products.add(productToOrder);
         }
 //        for (String productId : productIds) {
 //            Product productToOrder = productRepo.getProductById(productId);
@@ -41,7 +33,7 @@ public class ShopService {
 //            }
 //            products.add(productToOrder);
 //        }
-        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order newOrder = new Order(UUID.randomUUID().toString(), products, OrderStatus.PROCESSING, Instant.now());
         return orderRepo.addOrder(newOrder);
     }
 

@@ -1,4 +1,4 @@
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 
 public class Main {
@@ -15,9 +15,9 @@ public class Main {
         productRepo.addProduct(product2);
         productRepo.addProduct(product3);
 
-        Order order1 = new Order("1", List.of(product1,product2),OrderStatus.PROCESSING, ZonedDateTime.now());
-        Order order2 = new Order("2", List.of(product3,product1),OrderStatus.PROCESSING, ZonedDateTime.now());
-        Order order3 = new Order("3", List.of(product3,product2),OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order order1 = new Order("1", List.of(product1,product2),OrderStatus.PROCESSING, Instant.now());
+        Order order2 = new Order("2", List.of(product3,product1),OrderStatus.PROCESSING, Instant.now());
+        Order order3 = new Order("3", List.of(product3,product2),OrderStatus.PROCESSING, Instant.now());
 
         try {
             shopService.addOrder(List.of(product1.id(),product2.id()));

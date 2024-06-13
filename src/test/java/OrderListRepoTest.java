@@ -1,12 +1,13 @@
 import org.junit.jupiter.api.Test;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderListRepoTest {
+    private static final Instant TEST_TIME_OF_ORDER = Instant.now();
 
     @Test
     void getOrders() {
@@ -14,7 +15,7 @@ class OrderListRepoTest {
         OrderListRepo repo = new OrderListRepo();
 
         Product product = new Product("1", "Apfel");
-        Order newOrder = new Order("1", List.of(product),OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order newOrder = new Order("1", List.of(product),OrderStatus.PROCESSING, TEST_TIME_OF_ORDER);
         repo.addOrder(newOrder);
 
         //WHEN
@@ -34,7 +35,7 @@ class OrderListRepoTest {
         OrderListRepo repo = new OrderListRepo();
 
         Product product = new Product("1", "Apfel");
-        Order newOrder = new Order("1", List.of(product),OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order newOrder = new Order("1", List.of(product),OrderStatus.PROCESSING, TEST_TIME_OF_ORDER);
         repo.addOrder(newOrder);
 
         //WHEN
@@ -52,7 +53,7 @@ class OrderListRepoTest {
         //GIVEN
         OrderListRepo repo = new OrderListRepo();
         Product product = new Product("1", "Apfel");
-        Order newOrder = new Order("1", List.of(product),OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order newOrder = new Order("1", List.of(product),OrderStatus.PROCESSING, TEST_TIME_OF_ORDER);
 
         //WHEN
         Order actual = repo.addOrder(newOrder);

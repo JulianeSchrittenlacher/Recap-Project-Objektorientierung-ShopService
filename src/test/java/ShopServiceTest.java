@@ -1,17 +1,18 @@
 import org.junit.jupiter.api.Test;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShopServiceTest {
+    private static final Instant TEST_TIME_OF_ORDER = Instant.now();
 
     @Test
-    void addOrderTest() {
+    void addOrderTest() throws IdNotFoundException {
         //GIVEN
         ShopService shopService = new ShopService();
-        List<String> productsIds = List.of("1", "2", "3");
+        List<String> productsIds = List.of("1");
 //        ProductRepo repo = new ProductRepo();
 //        repo.addProduct(new Product("1","Apfel"));
 //        repo.addProduct(new Product("2","Birne"));
@@ -19,16 +20,12 @@ class ShopServiceTest {
 
         //WHEN
         //Order actual = null;
-        Order actual = null;
-        try {
-            actual = shopService.addOrder(productsIds);
-        } catch (IdNotFoundException e) {
-        }
 
-        //THEN
-        Order expected = new Order("-1", List.of(new Product("1", "Apfel"), new Product("2", "Birne"),
-                new Product("3", "Pflaume")), OrderStatus.PROCESSING, ZonedDateTime.now());
-        assertEquals(expected, actual);
+         Order actual = shopService.addOrder(productsIds);
+
+         //THEN
+        Order expected = new Order("-1", List.of(new Product("1", "Apfel")), OrderStatus.PROCESSING, TEST_TIME_OF_ORDER);
+        assertEquals(expected.products(), actual.products());
         assertNotNull(expected.id());
     }
 
@@ -43,7 +40,6 @@ class ShopServiceTest {
             shopService.addOrder(productsIds);
             fail("Expected IdNotFoundException, but was not thrown");
         } catch (IdNotFoundException e) {
-
         }
 
 //        //THEN
@@ -51,27 +47,40 @@ class ShopServiceTest {
     }
 
     @Test
-    void getOrdersOfSpecificOrderStatus_ListOfOrdersWithProgressing_whenCalledWithProgressing() {
+    void getOrdersOfSpecificOrderStatus_ListOfOrdersWithProgressing_whenCalledWithProgressing() throws IdNotFoundException {
         //GIVEN
         ShopService shopService = new ShopService();
-        Order order1 = new Order("1", List.of(), OrderStatus.PROCESSING, ZonedDateTime.now());
-        Order order2 = new Order("2", List.of(), OrderStatus.PROCESSING, ZonedDateTime.now());
-        Order order3 = new Order("3", List.of(), OrderStatus.IN_DELIVERY, ZonedDateTime.now());
-        Order order4 = new Order("4", List.of(), OrderStatus.COMPLETED, ZonedDateTime.now());
-        try {
-            shopService.addOrder(List.of(order1.id(), order2.id(), order3.id(), order4.id()));
-        } catch (IdNotFoundException e) {}
+
+        Order newOrder1 = shopService.addOrder(List.of("1", "3"));
+        OrderStatus updatedOrderStatus = shopService.updateOrderStatus(newOrder1.id(),OrderStatus.IN_DELIVERY);
+
+        Order newOrder2 = shopService.addOrder(List.of("1"));
 
         //WHEN
-        List<Order> actual = shopService.getOrdersOfSpecificOrderStatus(OrderStatus.IN_DELIVERY);
+        List<Order> actual1 = shopService.getOrdersOfSpecificOrderStatus(OrderStatus.IN_DELIVERY);
+        List<Order> actual2 = shopService.getOrdersOfSpecificOrderStatus(OrderStatus.PROCESSING);
+        List<Order> actual3 = shopService.getOrdersOfSpecificOrderStatus(OrderStatus.COMPLETED);
 
         //THEN
-        assertEquals(List.of(order3), actual);
-
-
+        assertEquals(1, actual1.size());
+        assertEquals(1, actual2.size());
+        assertEquals(0, actual3.size());
     }
 
     @Test
-    void updateOrderStatus() {
+    void updateOrderStatus() throws IdNotFoundException {
+        //GIVEN
+        ShopService shopService = new ShopService();
+        List<String> productsIds = List.of("1");
+        Order oldOrder = shopService.addOrder(productsIds);
+
+        //WHEN
+        shopService.updateOrderStatus(oldOrder.id(), OrderStatus.COMPLETED);
+
+        //THEN
+        List<Order> completedOrders = shopService.getOrdersOfSpecificOrderStatus(OrderStatus.COMPLETED);
+        assertEquals(1,completedOrders.size());
+        List<Order> processingOrders = shopService.getOrdersOfSpecificOrderStatus(OrderStatus.PROCESSING);
+        assertEquals(0,processingOrders.size());
     }
 }
