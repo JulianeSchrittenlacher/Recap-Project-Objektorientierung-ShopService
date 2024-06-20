@@ -5,7 +5,8 @@ public class Main {
     public static void main(String[] args) {
         OrderRepo orderRepo = new OrderListRepo();
         ProductRepo productRepo = new ProductRepo();
-        ShopService shopService = new ShopService();
+        UtilService utilService = new UtilService();
+        ShopService shopService = new ShopService(productRepo,orderRepo,utilService);
 
         //Ich komme mit den Produkten durcheinander
 

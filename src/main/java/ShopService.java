@@ -11,9 +11,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 
 public class ShopService {
-    private final ProductRepo productRepo = new ProductRepo();
-    private final OrderRepo orderRepo = new OrderMapRepo();
-    private final UtilService utilService = new UtilService();
+
+    private final ProductRepo productRepo;
+    private final OrderRepo orderRepo;
+    private final UtilService utilService;
 
 //    public ShopService(ProductRepo productRepo, OrderRepo orderRepo) {
 //        this.productRepo =productRepo;
