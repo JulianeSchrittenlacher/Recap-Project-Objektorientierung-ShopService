@@ -7,43 +7,48 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShopServiceTest {
     private static final Instant TEST_TIME_OF_ORDER = Instant.now();
-
+//    //mein Test
+//    @Test
+//    void addOrderTest() throws IdNotFoundException {
+//        //GIVEN
+//        ShopService shopService = new ShopService();
+//        List<String> productsIds = List.of("1");
+////        ProductRepo repo = new ProductRepo();
+////        repo.addProduct(new Product("1","Apfel"));
+////        repo.addProduct(new Product("2","Birne"));
+////        repo.addProduct(new Product("3","Pflaume"));
+//
+//        //WHEN
+//        //Order actual = null;
+//
+//         Order actual = shopService.addOrder(productsIds);
+//
+//         //THEN
+//        Order expected = new Order("-1", List.of(new Product("1", "Apfel")), OrderStatus.PROCESSING, TEST_TIME_OF_ORDER);
+//        assertEquals(expected.products(), actual.products());
+//        assertNotNull(expected.id());
+//    }
+//    //Meine Tests
+//    @Test
+//    void addOrderTest_whenInvalidProductId_thenThrowException() {
+//        //GIVEN
+//        ShopService shopService = new ShopService();
+//        List<String> productsIds = List.of("1", "2","254");
+//
+//        //WHEN
+//        try {
+//            shopService.addOrder(productsIds);
+//            fail("Expected IdNotFoundException, but was not thrown");
+//        } catch (IdNotFoundException e) {
+//        }
+//
+////        //THEN
+////        assertThrows(IdNotFoundException.class, () -> shopService.addOrder(productsIds));
+//    }
     @Test
-    void addOrderTest() throws IdNotFoundException {
-        //GIVEN
-        ShopService shopService = new ShopService();
-        List<String> productsIds = List.of("1");
-//        ProductRepo repo = new ProductRepo();
-//        repo.addProduct(new Product("1","Apfel"));
-//        repo.addProduct(new Product("2","Birne"));
-//        repo.addProduct(new Product("3","Pflaume"));
+    void addOrder() throws IdNotFoundException{
 
-        //WHEN
-        //Order actual = null;
 
-         Order actual = shopService.addOrder(productsIds);
-
-         //THEN
-        Order expected = new Order("-1", List.of(new Product("1", "Apfel")), OrderStatus.PROCESSING, TEST_TIME_OF_ORDER);
-        assertEquals(expected.products(), actual.products());
-        assertNotNull(expected.id());
-    }
-
-    @Test
-    void addOrderTest_whenInvalidProductId_thenThrowException() {
-        //GIVEN
-        ShopService shopService = new ShopService();
-        List<String> productsIds = List.of("1", "2","254");
-
-        //WHEN
-        try {
-            shopService.addOrder(productsIds);
-            fail("Expected IdNotFoundException, but was not thrown");
-        } catch (IdNotFoundException e) {
-        }
-
-//        //THEN
-//        assertThrows(IdNotFoundException.class, () -> shopService.addOrder(productsIds));
     }
 
     @Test

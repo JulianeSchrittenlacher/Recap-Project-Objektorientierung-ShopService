@@ -5,7 +5,10 @@ public class Main {
     public static void main(String[] args) {
         OrderRepo orderRepo = new OrderListRepo();
         ProductRepo productRepo = new ProductRepo();
-        ShopService shopService = new ShopService(productRepo,orderRepo);
+        UtilService utilService = new UtilService();
+        ShopService shopService = new ShopService(productRepo,orderRepo,utilService);
+
+        //Ich komme mit den Produkten durcheinander
 
         Product product1 = new Product("1", "Blume");
         Product product2 = new Product("2", "Benz");
